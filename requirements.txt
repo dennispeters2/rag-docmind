@@ -2,9 +2,10 @@ langchain
 langchain-community
 langchain-openai
 langchain-text-splitters
-chromadb==0.4.24
+chromadb==0.5.23
 pypdf
 streamlit
 python-dotenv
 openai
 tiktoken
+numpy<2.0
