@@ -2,11 +2,9 @@ langchain
 langchain-community
 langchain-openai
 langchain-text-splitters
+faiss-cpu
 pypdf
 streamlit
 python-dotenv
 openai
 tiktoken
-numpy<2.0
-cffi==1.17.1
-chromadb==0.5.23
