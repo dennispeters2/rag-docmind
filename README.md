@@ -1,6 +1,6 @@
 # 🧠 DocMind — RAG-Powered Document Q&A
 
-A production-quality **Retrieval-Augmented Generation (RAG)** app built with LangChain, ChromaDB, and OpenAI. Upload any PDF, ask questions, get source-cited answers with full conversation memory.
+A production-quality **Retrieval-Augmented Generation (RAG)** app built with LangChain, FAISS, and OpenAI. Upload any PDF, ask questions, get source-cited answers with full conversation memory.
 
 ---
 
@@ -9,7 +9,7 @@ A production-quality **Retrieval-Augmented Generation (RAG)** app built with Lan
 ```
 INGESTION PIPELINE
 ──────────────────────────────────────────────────────────────
-  PDF/TXT  →  Load  →  Chunk  →  Embed        →  ChromaDB
+  PDF/TXT  →  Load  →  Chunk  →  Embed        →  FAISS
  (files)    PyPDF    RCTS*     ada-002 1536d    vector store
 
 QUERY PIPELINE
@@ -25,7 +25,7 @@ QUERY PIPELINE
 | Document loading | PyPDFLoader, TextLoader | Preserves page metadata for citations |
 | Chunking | RecursiveCharacterTextSplitter | Splits on paragraphs first, preserves semantics |
 | Embeddings | text-embedding-ada-002 | 1536-dim vectors, semantic not keyword matching |
-| Vector store | ChromaDB | Local, no server, cosine similarity search |
+| Vector store | FAISS | Local, no server, cosine similarity search |
 | Retrieval | MMR (k=3, fetch_k=9) | Diverse results, not 3 copies of same chunk |
 | LLM | gpt-4o-mini, temp=0 | Deterministic, grounded, cheap |
 | Memory | ConversationBufferMemory | Enables follow-up questions |
@@ -62,7 +62,7 @@ chainlit run chainlit_app.py  # Chainlit UI (best chat UX)
 ## F&Q
 
 **"Walk me through your RAG pipeline"**
-> "Two phases. Ingestion: I load documents with LangChain's PyPDFLoader, split them into 500-character chunks with 50-character overlap using RecursiveCharacterTextSplitter, embed each chunk with OpenAI's text-embedding-ada-002 to get 1536-dimensional vectors, and store those in ChromaDB locally. At query time: I embed the question with the same model, retrieve the top-3 most semantically similar chunks using MMR retrieval, and pass those chunks plus conversation history to GPT as context."
+> "Two phases. Ingestion: I load documents with LangChain's PyPDFLoader, split them into 500-character chunks with 50-character overlap using RecursiveCharacterTextSplitter, embed each chunk with OpenAI's text-embedding-ada-002 to get 1536-dimensional vectors, and store those in FAISS . At query time: I embed the question with the same model, retrieve the top-3 most semantically similar chunks using MMR retrieval, and pass those chunks plus conversation history to GPT as context."
 
 **"Why RAG instead of fine-tuning?"**
 > "RAG is better when documents change — you just re-index, no retraining. Fine-tuning bakes knowledge into weights: expensive, slow, and static. RAG also provides source attribution which is critical for trust and auditability. Fine-tuning is better when you need the model to adopt a specific tone, style, or domain vocabulary."
