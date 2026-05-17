@@ -59,7 +59,7 @@ chainlit run chainlit_app.py  # Chainlit UI (best chat UX)
 
 ---
 
-## Interview Q&A — Say These Out Loud
+## F&Q
 
 **"Walk me through your RAG pipeline"**
 > "Two phases. Ingestion: I load documents with LangChain's PyPDFLoader, split them into 500-character chunks with 50-character overlap using RecursiveCharacterTextSplitter, embed each chunk with OpenAI's text-embedding-ada-002 to get 1536-dimensional vectors, and store those in ChromaDB locally. At query time: I embed the question with the same model, retrieve the top-3 most semantically similar chunks using MMR retrieval, and pass those chunks plus conversation history to GPT as context."
